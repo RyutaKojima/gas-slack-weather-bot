@@ -42,9 +42,9 @@ function notifyWeather() {
  * @returns {string}
  */
 function createBodyMessage() {
-  const longitude = PropertiesService.getScriptProperties().getProperty('LONGITUDE');
   const latitude = PropertiesService.getScriptProperties().getProperty('LATITUDE');
-  const weather = getWeatherFromDarkSky(longitude, latitude, ["lang=ja", "units=ca", "exclude=minutely,hourly,flags"]);
+  const longitude = PropertiesService.getScriptProperties().getProperty('LONGITUDE');
+  const weather = getWeatherFromDarkSky(latitude, longitude, ["lang=ja", "units=ca", "exclude=minutely,hourly,flags"]);
 
   var message = "";
 
