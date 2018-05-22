@@ -1,3 +1,20 @@
+/**
+ ********************************************************************************
+ * GASの「スクリプトのプロパティ」に定義が必要
+ * - SLACK_HOOK_URI
+ * - DARK_SKY_SECRET_KEY
+ * - LATITUDE
+ * - LONGITUDE
+ ********************************************************************************
+ */
+
+/**
+ * 実行可能APIで公開した場合、POSTリクエストはこの関数が呼ばれる。
+ * Slackのスラッシュコマンドのエンドポイントとして設定する。
+ * 
+ * @param e
+ * @returns {*}
+ */
 function doPost(e) {
   const message = createBodyMessage();
   const response = {
@@ -11,14 +28,23 @@ function doPost(e) {
           .setMimeType(ContentService.MimeType.JSON);
 }
 
+/**
+ * お天気ボットの起動
+ */
 function notifyWeather() {
   const message = createBodyMessage();
   send_to_slack(message, "お天気bot", ":japan:");
 }
 
+/**
+ * 返却メッセージを作成
+ * 
+ * @returns {string}
+ */
 function createBodyMessage() {
-  const now = new Date();
-  const weather = getWeatherFromDarkSky("34.390271", "132.4613913", ["lang=ja", "units=ca", "exclude=minutely,hourly,flags"]);
+  const longitude = PropertiesService.getScriptProperties().getProperty('LONGITUDE');
+  const latitude = PropertiesService.getScriptProperties().getProperty('LATITUDE');
+  const weather = getWeatherFromDarkSky(longitude, latitude, ["lang=ja", "units=ca", "exclude=minutely,hourly,flags"]);
 
   var message = "";
 
