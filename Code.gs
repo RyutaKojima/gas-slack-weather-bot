@@ -12,7 +12,7 @@ var LF = "\n"
 var DARK_SKY_SITE_URL = "https://darksky.net/dev";
 
 /**
- * 実行可能APIで公開した場合、POSTリクエストはこの関数が呼ばれる。
+ * 「ウェブアプリケーションとして導入」で公開した場合、POSTリクエストはこの関数が呼ばれる。
  * Slackのスラッシュコマンドのエンドポイントとして設定する。
  * 
  * @param e
