@@ -8,6 +8,9 @@
  ********************************************************************************
  */
 
+var LF = "\n"
+var DARK_SKY_SITE_URL = "https://darksky.net/dev";
+
 /**
  * 実行可能APIで公開した場合、POSTリクエストはこの関数が呼ばれる。
  * Slackのスラッシュコマンドのエンドポイントとして設定する。
@@ -50,7 +53,7 @@ function createBodyMessage() {
 
   // 現在天気
 //  const current = makeMessageFromDarkSky(weather["currently"]);
-//  message += "現在の天気：" + current["icon"] + current["summary"] + "　" + current["other"] + "\n";
+//  message += "現在の天気：" + current["icon"] + current["summary"] + "　" + current["other"] + LF;
 
   // 週間予報
   var buffer = [];
@@ -63,8 +66,10 @@ function createBodyMessage() {
     buffer.push(result);
   });
   buffer.forEach(function(element){
-    message += "\n" + leftPadding(element["date"], maxDateKeta) + "は：" + element["icon"] + rightPadding(element["summary"], maxSummaryKeta) + element["other"];
+    message += LF + leftPadding(element["date"], maxDateKeta) + "は：" + element["icon"] + rightPadding(element["summary"], maxSummaryKeta) + element["other"];
   });
+
+  message += LF + "Provided by: Dark Sky (" + DARK_SKY_SITE_URL + ")";
 
   return message;
 }
