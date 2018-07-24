@@ -8,7 +8,7 @@
  ********************************************************************************
  */
 
-var LF = "\n"
+var LF = "\n";
 var DARK_SKY_SITE_URL = "https://darksky.net/dev";
 
 /**
@@ -47,7 +47,7 @@ function notifyWeather() {
 function createBodyMessage() {
   const latitude = PropertiesService.getScriptProperties().getProperty('LATITUDE');
   const longitude = PropertiesService.getScriptProperties().getProperty('LONGITUDE');
-  const weather = getWeatherFromDarkSky(latitude, longitude, ["lang=ja", "units=ca", "exclude=minutely,hourly,flags"]);
+  const weather = getWeatherFromDarkSky(latitude, longitude, ["lang=ja", "units=ca", "exclude=currently,minutely,hourly,flags"]);
 
   var message = "";
 
@@ -79,16 +79,24 @@ function createBodyMessage() {
  */
 function makeMessageFromDarkSky(data) {
   var other = "";
+
   if (data.hasOwnProperty("temperature")) {
     other += "気温：" + data["temperature"] + "℃　";
   }
+
   if (data.hasOwnProperty("temperatureHigh")) {
     other += "最高気温：" + data["temperatureHigh"] + "℃　";
   }
+
   if (data.hasOwnProperty("temperatureLow")) {
     other += "最低気温：" + data["temperatureLow"] + "℃　";
   }
-  other += "降水確率：" + Math.round(100*data["precipProbability"], 0) + "％　";
+
+  other += "降水確率：" + Math.round(100 * data['precipProbability'], 0) + '％　';
+
+  if (data.hasOwnProperty("humidity")) {
+    other += '湿度：' + Math.round(100 * data['humidity'], 0) + '％　';
+  }
 
   return {
     "date": getDateLabel(data["time"], new Date()),
