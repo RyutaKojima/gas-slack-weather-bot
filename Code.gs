@@ -12,6 +12,16 @@ var LF = "\n";
 var DARK_SKY_SITE_URL = "https://darksky.net/dev";
 
 /**
+ * API呼び出しテスト
+ */
+function testCallDarkSkyApi() {
+	const latitude = PropertiesService.getScriptProperties().getProperty('LATITUDE');
+	const longitude = PropertiesService.getScriptProperties().getProperty('LONGITUDE');
+	const weather = getWeatherFromDarkSky(latitude, longitude, ["lang=ja", "units=ca", "exclude=daily,minutely,hourly,flags"]);
+	Logger.log(JSON.stringify(weather));
+}
+
+/**
  * 「ウェブアプリケーションとして導入」で公開した場合、POSTリクエストはこの関数が呼ばれる。
  * Slackのスラッシュコマンドのエンドポイントとして設定する。
  * 
